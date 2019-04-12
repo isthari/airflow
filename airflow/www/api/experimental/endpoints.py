@@ -21,6 +21,7 @@ from flask import (
 )
 
 import airflow.api
+from airflow.api.common.experimental.get_dags_all import get_dags_all
 from airflow.api.common.experimental import delete_dag as delete
 from airflow.api.common.experimental import pool as pool_api
 from airflow.api.common.experimental import trigger_dag as trigger
@@ -42,6 +43,11 @@ requires_authentication = airflow.api.api_auth.requires_authentication
 
 api_experimental = Blueprint('api_experimental', __name__)
 
+@api_experimental.route('/dags/dags_all', methods=['GET'])
+@requires_authentication
+def dags_all():
+    list = get_dags_all('airflow.graph')
+    return jsonify(list)
 
 @csrf.exempt
 @api_experimental.route('/dags/<string:dag_id>/dag_runs', methods=['POST'])
