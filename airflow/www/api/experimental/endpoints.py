@@ -292,7 +292,8 @@ def latest_dag_runs():
                 'start_date': ((dagrun.start_date or '') and
                                dagrun.start_date.isoformat()),
                 'dag_run_url': url_for('airflow.graph', dag_id=dagrun.dag_id,
-                                       execution_date=dagrun.execution_date)
+                                       execution_date=dagrun.execution_date),
+                'state': dagrun.state
             })
     return jsonify(items=payload)  # old flask versions dont support jsonifying arrays
 
