@@ -90,6 +90,7 @@ def initdb(rbac=False):
     from airflow.models.connection import Connection
     upgradedb()
 
+'''
     merge_conn(
         Connection(
             conn_id='airflow_db', conn_type='mysql',
@@ -179,13 +180,6 @@ def initdb(rbac=False):
             host='localhost'))
     merge_conn(
         Connection(
-            conn_id='sftp_default', conn_type='sftp',
-            host='localhost', port=22, login='airflow',
-            extra='''
-                {"key_file": "~/.ssh/id_rsa", "no_host_key_check": true}
-            '''))
-    merge_conn(
-        Connection(
             conn_id='fs_default', conn_type='fs',
             extra='{"path": "/"}'))
     merge_conn(
@@ -213,53 +207,6 @@ def initdb(rbac=False):
         Connection(
             conn_id='sqoop_default', conn_type='sqoop',
             host='rmdbs', extra=''))
-    merge_conn(
-        Connection(
-            conn_id='emr_default', conn_type='emr',
-            extra='''
-                {   "Name": "default_job_flow_name",
-                    "LogUri": "s3://my-emr-log-bucket/default_job_flow_location",
-                    "ReleaseLabel": "emr-4.6.0",
-                    "Instances": {
-                        "Ec2KeyName": "mykey",
-                        "Ec2SubnetId": "somesubnet",
-                        "InstanceGroups": [
-                            {
-                                "Name": "Master nodes",
-                                "Market": "ON_DEMAND",
-                                "InstanceRole": "MASTER",
-                                "InstanceType": "r3.2xlarge",
-                                "InstanceCount": 1
-                            },
-                            {
-                                "Name": "Slave nodes",
-                                "Market": "ON_DEMAND",
-                                "InstanceRole": "CORE",
-                                "InstanceType": "r3.2xlarge",
-                                "InstanceCount": 1
-                            }
-                        ],
-                        "TerminationProtected": false,
-                        "KeepJobFlowAliveWhenNoSteps": false
-                    },
-                    "Applications":[
-                        { "Name": "Spark" }
-                    ],
-                    "VisibleToAllUsers": true,
-                    "JobFlowRole": "EMR_EC2_DefaultRole",
-                    "ServiceRole": "EMR_DefaultRole",
-                    "Tags": [
-                        {
-                            "Key": "app",
-                            "Value": "analytics"
-                        },
-                        {
-                            "Key": "environment",
-                            "Value": "development"
-                        }
-                    ]
-                }
-            '''))
     merge_conn(
         Connection(
             conn_id='databricks_default', conn_type='databricks',
@@ -296,6 +243,7 @@ def initdb(rbac=False):
         Connection(
             conn_id='opsgenie_default', conn_type='http',
             host='', password=''))
+            '''
 
     # Known event types
     KET = models.KnownEventType
